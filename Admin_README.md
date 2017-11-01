@@ -46,6 +46,9 @@ Instructions on getting this repo to work once cloned
 
 Run the following commands or do the following:
 
+Add React Native components
+$ yarn add react-native
+
 To make React Native components work on ReactJS, run the following commands using npm or yarn. See https://github.com/necolas/react-native-web for reference.
 $ yarn add react react-dom react-native-web
 
