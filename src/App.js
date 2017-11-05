@@ -23,11 +23,12 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import {TestPage} from './pages/TestPage';
+import {RequestFormPage} from "./pages/RequestFormPage";
 
 class App extends Component {
     render() {
         return(
-            <TestPage/>
+            <RequestFormPage/>
         );
     }
 }

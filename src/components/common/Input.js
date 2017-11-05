@@ -3,7 +3,16 @@ import { TextInput, View, Text } from 'react-native';
 
 const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
     const { inputStyle, labelStyle, containerStyle } = styles;
-
+    /**
+     * Props:
+     * label: label of the text input
+     * secureTextEntry: determines if password will shown or not
+     * placeholder: placeholder text
+     * autoCorrect: autoCorrect on/off
+     * style: default style
+     * value: value of text
+     * onChangeText: return of onChangeText
+     */
     return (
         <View style={containerStyle}>
             <Text style={labelStyle}>{label}</Text>
@@ -15,7 +24,9 @@ const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => 
                 value={value}
                 onChangeText={onChangeText}
             />
+            <br/>
         </View>
+
     );
 };
 
@@ -26,7 +37,8 @@ const styles = {
         paddingLeft: 5,
         fontSize: 18,
         lineHeight: 23,
-        flex: 2
+        flex: 2,
+        borderTopColor: 'black'
     },
     labelStyle: {
         fontSize: 18,
