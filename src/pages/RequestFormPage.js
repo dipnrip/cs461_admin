@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
-import {Button, Input, Page, PageSection, Header} from "../components/common";
+import {Button, Input, Page, PageSection, Header,} from "../components/common";
+import Calendar from '../components/common/Calendar';
 
 class RequestFormPage extends Component {
     render() {
@@ -27,7 +28,7 @@ class RequestFormPage extends Component {
                     <PageSection
                         style={{flex: 1}}
                     >
-                        <Text>placeholder for date picker component</Text>
+                        <Calendar/>
                     </PageSection>
                 </View>
                 <PageSection>
