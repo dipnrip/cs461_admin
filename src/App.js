@@ -23,12 +23,16 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import {TestPage} from './pages/TestPage';
-import {RequestFormPage} from "./pages/RequestFormPage";
+import {LogInPage} from "./pages/LogInPage";
+import {Button,Spinner,Header} from "./components/common";
 
 class App extends Component {
     render() {
-        return(
-            <RequestFormPage/>
+        return (
+            <div>
+                <Header headerText = "Authentication"/>
+                <LogInPage/>
+            </div>
         );
     }
 }
