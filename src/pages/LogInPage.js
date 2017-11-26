@@ -1,11 +1,16 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Text, View} from 'react-native';
 import firebase from 'firebase';
 import {Button, Input, Page, PageSection,Spinner} from "../components/common";
+import {loginUser,emailChanged,passwordChanged} from '../actions';
 
 class LogInPage extends React.Component
 {
-    state = {email: '',password:'',error:'',loading:false, loggedIn: false};
+   onEmailChange(text)
+   {this.props.emailChanged(text);}
+   onPasswordChange(text)
+   {this.props.passwordChanged(text);}
     componentWillMount()
     {
         firebase.initializeApp({
@@ -23,30 +28,15 @@ class LogInPage extends React.Component
     }
     onButtonPress()
     {
-        const {email, password} = this.state;
+        const {email, password} = this.props;
+        this.props.loginUser({email,password});
         this.setState({error: '', loading: true});
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(this.onLoginSuccess.bind(this))
-            .catch(this.onLoginFail.bind(this));
-    }
-    onLoginFail()
-    {
-        this.setState({error:'Authentication failed', loading:false});
-    }
-    onLoginSuccess()
-    {
-        this.setState({
-            email:'',
-            password:'',
-            loading:false,
-            error:''
-        });
     }
     renderButton()
     {
-        if (this.state.loading)
+        if (this.props.loading)
         {
-            return <Spinner size="small"/>;
+            return <Spinner size="large"/>;
         }
         return(
             <Button onPress={this.onButtonPress.bind(this)}>
@@ -56,40 +46,32 @@ class LogInPage extends React.Component
     }
     renderContent()
     {
-        switch(this.state.loggedIn)
-        {
-            case true:
-                return (<Button onPress={() => firebase.auth().signOut()}>Log out</Button>);
-            case false:
-                return ( <Page>
-                    <PageSection>
-                        <Input
-                            placeholder="user@gmail.com"
-                            label={"Email"}
-                            value ={this.state.email}
-                            onChangeText={email=>this.setState({email})}
-                        />
-                    </PageSection>
-
-                    <PageSection>
-                        <Input
-                            secureTextEntry
-                            placeholder="Password"
-                            label="Password"
-                            value={this.state.password}
-                            onChangeText={password =>this.setState({password})}
-                        />
-                    </PageSection>
-                    <Text style={styles.errorTextStyle}>
-                        {this.state.error}
-                    </Text>
-                    <PageSection>
-                        {this.renderButton()}
-                    </PageSection>
-                </Page>)
-            default:
-                return <Spinner size = "large"/>;
-        }
+        return (
+            <Page>
+            <PageSection>
+                <Input
+                    placeholder="user@gmail.com"
+                    label={"Email"}
+                    value ={this.props.email}
+                    onChangeText={this.onEmailChange.bind(this)}
+                />
+            </PageSection>
+            <PageSection>
+                <Input
+                    secureTextEntry
+                    placeholder="Password"
+                    label="Password"
+                    value={this.props.password}
+                    onChangeText={this.onPasswordChange(this)}
+                />
+            </PageSection>
+            <Text style={styles.errorTextStyle}>
+                {this.props.error}
+            </Text>
+            <PageSection>
+                {this.renderButton()}
+            </PageSection>
+            </Page>)
     }
     render() {
         return (
@@ -104,5 +86,9 @@ const styles={
         color:'red'
     }
 };
+const mapStateToProps=({auth}) => {
+    const {email,password,error,loading} = auth;
+    return {email,password,error,loading};
+};
 
-export {LogInPage};
+export default connect(mapStateToProps,{emailChanged,passwordChanged,loginUser})(LogInPage);
